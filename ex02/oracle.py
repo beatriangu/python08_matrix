@@ -25,12 +25,14 @@ REQUIRED_KEYS = (
 
 def load_config() -> None:
     """
-    Load .env if python-dotenv exists. Environment variables should override .env
-    automatically (load_dotenv does not overwrite by default).
+    Load .env if python-dotenv exists.
+
+    Environment variables override values from .env automatically
+    (load_dotenv does not overwrite by default).
     """
     if load_dotenv is None:
         return
-    load_dotenv()  # reads .env if present
+    load_dotenv()
 
 
 def mask_secret(value: str) -> str:
@@ -66,10 +68,16 @@ def main() -> None:
     zion = os.environ.get("ZION_ENDPOINT", "")
 
     print(f"Mode: {mode}")
-    print(f"Database: {'Configured' if db else 'Missing DATABASE_URL'}")
-    print(f"API Access: {'Authenticated' if api_key else 'Missing API_KEY'}")
+    print(
+        f"Database: {'Configured' if db else 'Missing DATABASE_URL'}"
+    )
+    print(
+        f"API Access: {'Authenticated' if api_key else 'Missing API_KEY'}"
+    )
     print(f"Log Level: {log_level}")
-    print(f"Zion Network: {'Online' if zion else 'Missing ZION_ENDPOINT'}")
+    print(
+        f"Zion Network: {'Online' if zion else 'Missing ZION_ENDPOINT'}"
+    )
 
     print("Environment security check:")
     if api_key:
@@ -77,7 +85,6 @@ def main() -> None:
     else:
         print("[WARN] No API_KEY set (use .env.example as a template)")
 
-    # Friendly reminder from subject: never commit secrets
     if os.path.exists(".env"):
         print("[OK] .env file detected (make sure it's gitignored)")
     else:
@@ -85,8 +92,8 @@ def main() -> None:
 
     if missing:
         print("Missing configuration keys:")
-        for k in missing:
-            print(f"- {k}")
+        for key in missing:
+            print(f"- {key}")
         sys.exit(0)
 
     print("The Oracle sees all configurations.")

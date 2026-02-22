@@ -6,10 +6,15 @@ Authorized: pandas, requests, matplotlib, numpy, sys, importlib
 """
 
 import importlib
-import sys
-
 
 REQUIRED = ("pandas", "requests", "matplotlib", "numpy")
+
+PURPOSES = {
+    "pandas": "Data manipulation ready",
+    "requests": "Network access ready",
+    "matplotlib": "Visualization ready",
+    "numpy": "Numerical engine ready",
+}
 
 
 def check_deps() -> dict[str, str | None]:
@@ -34,32 +39,35 @@ def print_install_help() -> None:
 
 
 def main() -> None:
-    print("LOADING STATUS: Loading programs.")
+    print("LOADING STATUS: Loading programs...")
+    print()
     print("Checking dependencies:")
 
     versions = check_deps()
     missing = [k for k, v in versions.items() if v is None]
 
     for name in REQUIRED:
-        v = versions[name]
-        if v is None:
+        version = versions[name]
+        if version is None:
             print(f"[MISSING] {name}")
         else:
-            print(f"[OK] {name} ({v})")
+            purpose = PURPOSES.get(name, "Ready")
+            print(f"[OK] {name} ({version}) - {purpose}")
 
     if missing:
         print_install_help()
         return
 
-    # Imports only after we know deps exist (defendible + avoids crash)
+    print()
+    print("Analyzing Matrix data...")
+    print()
+
+    # Imports only after we know deps exist (avoids crash)
+    import matplotlib.pyplot as plt
     import numpy as np
     import pandas as pd
-    import matplotlib.pyplot as plt
-    import requests
 
-    print("Analyzing Matrix data.")
-    # Simulated data
-    n = 200
+    n = 1000
     rng = np.random.default_rng(seed=42)
     df = pd.DataFrame(
         {
@@ -68,18 +76,10 @@ def main() -> None:
         }
     )
 
-    # Tiny network touch (safe): do not fail program if offline
-    try:
-        _ = requests.get("https://example.com", timeout=2)
-        network = "online"
-    except Exception:
-        network = "offline"
-    print(f"Network check: {network}")
-
-    print(f"Processing {len(df)} data points.")
+    print(f"Processing {len(df)} data points...")
     df["risk"] = df["signal"].abs() + (df["agent_activity"] * 0.2)
 
-    print("Generating visualization.")
+    print("Generating visualization...")
     plt.figure()
     plt.plot(df["risk"].to_numpy())
     plt.title("Matrix Risk Signal")
@@ -88,6 +88,8 @@ def main() -> None:
 
     out = "matrix_analysis.png"
     plt.savefig(out)
+
+    print()
     print("Analysis complete!")
     print(f"Results saved to: {out}")
 
