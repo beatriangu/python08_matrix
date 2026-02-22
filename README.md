@@ -1,4 +1,4 @@
-🚀 README.md (Optimized Portfolio Version)
+
 # 🧠 Python Module 08 – The Matrix  
 ## Virtual Environments, Dependency Management & Configuration
 
