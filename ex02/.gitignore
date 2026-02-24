@@ -3,6 +3,7 @@
 # =========================
 .env
 !.env.example
+oracle_env/
 
 # =========================
 # Python cache
@@ -16,11 +17,24 @@ __pycache__/
 venv/
 .venv/
 matrix_env/
+test_env/
+
+# =========================
+# Poetry (lock not required by subject)
+# =========================
+poetry.lock
 
 # =========================
 # Generated artifacts
 # =========================
+matrix_analysis.png
 *.png
+
+# =========================
+# Personal / notes
+# =========================
+OWNMAP
+OWNMAP.md
 
 # =========================
 # OS files

@@ -60,7 +60,6 @@ def main() -> None:
 
     print()
     print("Analyzing Matrix data...")
-    print()
 
     # Imports only after we know deps exist (avoids crash)
     import matplotlib.pyplot as plt
